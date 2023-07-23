@@ -40,6 +40,7 @@ STANDARD_APPS = [
 USER_APPS = [
     'rest_framework',
     'users.apps.UsersConfig',
+    'lms',
 ]
 
 INSTALLED_APPS = STANDARD_APPS + USER_APPS
@@ -80,7 +81,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '',
+        'NAME': 'dz7',
         'USER': 'postgres_ubuntu',
         'PASSWORD': '0112',
         'HOST': 'localhost',
