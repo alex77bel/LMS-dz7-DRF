@@ -38,9 +38,10 @@ STANDARD_APPS = [
 ]
 
 USER_APPS = [
-    'rest_framework',
+    'rest_framework',   # настройка для rest_framework
+    'django_filters',  # настройка для django_filters
     'users.apps.UsersConfig',
-    'lms',
+    'lms.apps.LmsConfig',
 ]
 
 INSTALLED_APPS = STANDARD_APPS + USER_APPS
@@ -110,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 
@@ -129,3 +130,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
+
+# настройка для rest_framework
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+}
