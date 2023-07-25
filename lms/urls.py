@@ -9,6 +9,7 @@ app_name = LmsConfig.name
 
 router = DefaultRouter()
 router.register(r'courses', views.CourseViewSet, basename='courses')
+# router.register(r'payments', views.PaymentViewSet, basename='payments')
 
 urlpatterns = [
     path('lessons/create/', views.LessonCreateAPIView.as_view(), name='lesson_create'),
@@ -16,4 +17,11 @@ urlpatterns = [
     path('lessons/<int:pk>/', views.LessonRetrieveAPIView.as_view(), name='lesson'),
     path('lessons/update/<int:pk>/', views.LessonUpdateAPIView.as_view(), name='lesson_update'),
     path('lessons/delete/<int:pk>/', views.LessonDestroyAPIView.as_view(), name='lesson_delete'),
+
+    path('payments/create/', views.PaymentCreateAPIView.as_view(), name='payment_create'),
+    path('payments/', views.PaymentListAPIView.as_view(), name='payments_list'),
+    path('payments/<int:pk>/', views.PaymentRetrieveAPIView.as_view(), name='payment'),
+    path('payments/update/<int:pk>/', views.PaymentUpdateAPIView.as_view(), name='payment_update'),
+    path('payments/delete/<int:pk>/', views.PaymentDestroyAPIView.as_view(), name='payment_delete'),
+
 ] + router.urls
