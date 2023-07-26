@@ -38,8 +38,9 @@ STANDARD_APPS = [
 ]
 
 USER_APPS = [
-    'rest_framework',   # настройка для rest_framework
+    'rest_framework',  # настройка для rest_framework
     'django_filters',  # настройка для django_filters
+    'rest_framework_simplejwt',  # настройка для JWT
     'users.apps.UsersConfig',
     'lms.apps.LmsConfig',
 ]
@@ -131,9 +132,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
 
-# настройка для rest_framework
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': (
-        'django_filters.rest_framework.DjangoFilterBackend',
-    ),
+
+    # настройка для rest_framework
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+
+    # настройка для JWT
+    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
+
 }
