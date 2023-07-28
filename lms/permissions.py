@@ -1,15 +1,4 @@
-from rest_framework.permissions import BasePermission, SAFE_METHODS, IsAuthenticated, IsAuthenticatedOrReadOnly, \
-    IsAdminUser
-
-
-# class IsOwnerOrStaff(BasePermission):
-#     """Проверка, что пользователь - модератор или владелец"""
-#
-#     def has_permission(self, request, view):
-#         if request.user.is_staff:
-#             return True
-#
-#         return request.user == view.get_object().user
+from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 
 class IsOwner(BasePermission):
@@ -25,3 +14,18 @@ class ReadOnly(BasePermission):
 
     def has_permission(self, request, view):
         return request.method in SAFE_METHODS
+
+
+class CoursePermissions(BasePermission):
+    """
+    Разрешает
+    - для безопасных методов - для модератора и владельца-не-модератора
+    - для прочих методов - для владельца
+    """
+
+    def has_object_permission(self, request, view, obj):
+        if request.method.upper() in SAFE_METHODS:
+            if request.user.is_staff: return True
+            return request.user == obj.owner
+        else:
+            return request.user == obj.owner

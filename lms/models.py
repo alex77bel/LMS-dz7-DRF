@@ -10,10 +10,10 @@ class Course(models.Model):
     preview = models.ImageField(upload_to='course/', verbose_name='превью', null=True, blank=True)
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.SET_NULL,
-                             related_name='course',
-                             verbose_name='пользователь',
-                             null=True, blank=True)
+                              on_delete=models.SET_NULL,
+                              related_name='course',
+                              verbose_name='пользователь',
+                              null=True, blank=True)
 
     def __str__(self):
         return f'{self.name}'
@@ -30,13 +30,14 @@ class Lesson(models.Model):
     preview = models.ImageField(upload_to='course/', verbose_name='превью', null=True, blank=True)
     video_link = models.URLField(verbose_name='ссылка на видео', null=True, blank=True)
 
-    course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True, related_name='lesson', verbose_name='курс')
+    course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True, related_name='lesson',
+                               verbose_name='курс')
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.SET_NULL,
-                             related_name='lesson',
-                             verbose_name='пользователь',
-                             null=True, blank=True)
+                              on_delete=models.SET_NULL,
+                              related_name='lesson',
+                              verbose_name='пользователь',
+                              null=True, blank=True)
 
     def __str__(self):
         return f'{self.name}'
@@ -53,8 +54,10 @@ class Payment(models.Model):
         TRANSFER = 'TR', 'Transfer'
 
     paid_at = models.DateField(verbose_name='дата оплаты')
-    paid_course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='оплаченный курс')
-    paid_lesson = models.ForeignKey(Lesson, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='оплаченный урок')
+    paid_course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True,
+                                    verbose_name='оплаченный курс')
+    paid_lesson = models.ForeignKey(Lesson, on_delete=models.SET_NULL, null=True, blank=True,
+                                    verbose_name='оплаченный урок')
     payment_amount = models.PositiveIntegerField(verbose_name='сумма оплаты')
     payment_method = models.CharField(max_length=2,
                                       choices=PaymentMethods.choices,
@@ -62,10 +65,10 @@ class Payment(models.Model):
                                       verbose_name='способ оплаты')
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.SET_NULL,
-                             related_name='payment',
-                             verbose_name='пользователь',
-                             null=True, blank=True)
+                              on_delete=models.SET_NULL,
+                              related_name='payment',
+                              verbose_name='пользователь',
+                              null=True, blank=True)
 
     def __str__(self):
         return f'Дата платежа {self.paid_at}, размер платежа {self.payment_amount}'
