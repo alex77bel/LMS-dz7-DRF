@@ -4,14 +4,14 @@ from lms.models import Course, Lesson, Payment
 
 
 @admin.register(Course)
-class ClientAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'description')
+class CourseAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'description', 'owner')
 
 @admin.register(Lesson)
-class ClientAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'description')
+class LessonAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'description', 'owner')
 
 @admin.register(Payment)
-class ClientAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'paid_at', 'paid_course', 'paid_lesson', 'payment_amount', 'payment_method')
+class PaymentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'owner', 'paid_at', 'paid_course', 'paid_lesson', 'payment_amount', 'payment_method')
 

@@ -5,16 +5,16 @@ from users.models import User
 
 class Command(BaseCommand):
     """
-    Класс - команда для создания суперпользователя
+    Класс - команда для создания пользователя
     """
 
     def handle(self, *args, **options):
         user = User.objects.create(
-            email='alex77bel@yandex.ru',
-            first_name='alex77bel',
-            last_name='django',
+            email='vas@vas.ru',
+            first_name='vas',
+            # last_name='django',
             is_staff=True,
-            is_superuser=True,
+            is_superuser=False,
             is_active=True,
         )
 

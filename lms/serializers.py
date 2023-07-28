@@ -11,7 +11,7 @@ class LessonSerializer(serializers.ModelSerializer):
 
 class CourseSerializer(serializers.ModelSerializer):
     number_of_lessons = serializers.SerializerMethodField(read_only=True)
-    lessons = LessonSerializer(source='lesson', many=True)  # список уроков в курсе
+    lessons = LessonSerializer(source='lesson', many=True, read_only=True)  # список уроков в курсе
 
     class Meta:
         model = Course
