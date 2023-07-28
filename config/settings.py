@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -38,8 +38,9 @@ STANDARD_APPS = [
 ]
 
 USER_APPS = [
-    'rest_framework',   # настройка для rest_framework
+    'rest_framework',  # настройка для rest_framework
     'django_filters',  # настройка для django_filters
+    'rest_framework_simplejwt',  # настройка для JWT
     'users.apps.UsersConfig',
     'lms.apps.LmsConfig',
 ]
@@ -131,9 +132,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
 
-# настройка для rest_framework
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': (
-        'django_filters.rest_framework.DjangoFilterBackend',
-    ),
+
+    # настройка для rest_framework
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+
+    # настройка для JWT
+    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
+
+    # эта настройка добавляет авторизацию на все контроллеры
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',)
+    # по умолчанию доступ ко всему открыт
+    # 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',)
 }
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
+}
+
