@@ -4,6 +4,7 @@ from rest_framework.filters import OrderingFilter
 
 from lms.models import Payment
 from lms import serializers
+from lms.views.lesson_views import SetOwnerMixin
 
 
 class PaymentBaseMixin:
@@ -14,7 +15,7 @@ class PaymentBaseMixin:
     queryset = Payment.objects.all()
 
 
-class PaymentCreateAPIView(generics.CreateAPIView):
+class PaymentCreateAPIView(SetOwnerMixin, generics.CreateAPIView):
     serializer_class = serializers.PaymentSerializer
 
 

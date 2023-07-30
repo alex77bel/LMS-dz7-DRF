@@ -3,12 +3,13 @@ from django.urls import path
 from lms.apps import LmsConfig
 from rest_framework.routers import DefaultRouter
 
-from lms.views import lesson_views, payment_views, course_views
+from lms.views import lesson_views, payment_views, course_views, subscription_views
 
 app_name = LmsConfig.name
 
 router = DefaultRouter()
 router.register(r'courses', course_views.CourseViewSet, basename='courses')
+router.register(r'subscriptions', subscription_views.SubscriptionViewSet, basename='subscriptions')
 
 urlpatterns = [
                   path('lessons/create/', lesson_views.LessonCreateAPIView.as_view(), name='lesson_create'),
