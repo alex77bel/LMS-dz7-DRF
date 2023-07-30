@@ -6,6 +6,13 @@ from lms import serializers
 from lms.permissions import IsOwner
 
 
+class SetOwnerMixin:
+    def perform_create(self, serializer):  # получение текущего авторизованного пользователя
+        new_obj = serializer.save()
+        new_obj.owner = self.request.user
+        new_obj.save()
+
+
 class GetModeratorOrOwnerMixin:
     """
     Возвращает queryset для модератора - полностью,
@@ -28,12 +35,8 @@ class LessonBaseMixin:
     queryset = Lesson.objects.all()
 
 
-class LessonCreateAPIView(generics.CreateAPIView):
+class LessonCreateAPIView(SetOwnerMixin, generics.CreateAPIView):
     serializer_class = serializers.LessonSerializer
-
-    def perform_create(self, serializer):  # получение текущего авторизованного пользователя
-        new_lesson = serializer.save()
-        new_lesson.user = self.request.user
 
 
 class LessonListAPIView(GetModeratorOrOwnerMixin, LessonBaseMixin, generics.ListAPIView):
