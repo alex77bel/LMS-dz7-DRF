@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAdminUser
 
 from lms.models import Lesson
 from lms import serializers
+from lms.paginators import CustomPaginator
 from lms.permissions import IsOwner
 
 
@@ -41,6 +42,7 @@ class LessonCreateAPIView(SetOwnerMixin, generics.CreateAPIView):
 
 class LessonListAPIView(GetModeratorOrOwnerMixin, LessonBaseMixin, generics.ListAPIView):
     permission_classes = [IsOwner | IsAdminUser]  # смотреть может только модератор или владелец
+    pagination_class = CustomPaginator
 
 
 class LessonRetrieveAPIView(LessonBaseMixin, generics.RetrieveAPIView):

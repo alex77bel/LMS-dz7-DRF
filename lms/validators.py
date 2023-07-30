@@ -12,6 +12,5 @@ class VideoLinkValidator:
 
     def __call__(self, data):
         value = dict(data).get(self.field)
-        print(value)
         if self.ALLOWED_LINK not in value:
             raise ValidationError('Bad video link')
