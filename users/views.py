@@ -14,6 +14,8 @@ class UserViewSet(viewsets.ModelViewSet):
        При этом при просмотре чужого профиля должна быть доступна только общая информация,
        урезанное число полей.
         """
-        if self.request.user.pk == int(self.kwargs['pk']):
-            return UserSerializerAll
+        if self.action == 'retrieve':
+            if self.request.user.pk == int(self.kwargs['pk']):
+                return UserSerializerAll
+            return UserSerializerShort
         return UserSerializerShort
