@@ -16,7 +16,8 @@ class LessonAdmin(admin.ModelAdmin):
 @admin.register(Payment)
 class PaymentAdmin(admin.ModelAdmin):
     list_display = (
-    'id', 'owner', 'paid_at', 'paid_course', 'paid_lesson', 'payment_amount', 'payment_method', 'payment_id')
+        'id', 'owner', 'paid_at', 'paid_course', 'paid_lesson', 'payment_amount', 'payment_method', 'payment_id',
+        'payment_status')
 
 
 @admin.register(Subscription)

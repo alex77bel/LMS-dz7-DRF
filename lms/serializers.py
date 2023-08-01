@@ -1,10 +1,10 @@
 import stripe
 from rest_framework import serializers
 
+from config import settings
 from lms.models import Course, Lesson, Payment, Subscription
 from lms.validators import VideoLinkValidator
 
-API_KEY = "sk_test_51NaO5cAG5LQisvlaNNahDCacDrXRR7qNuI34osLGqdwVLi53iWtDcNXNXAAfRRKp4v0GP7XNkqI2xZMMP0dh8tdH00pJkDoYtj"
 
 
 class LessonSerializer(serializers.ModelSerializer):
@@ -51,7 +51,7 @@ class PaymentCreateSerializer(serializers.ModelSerializer):
         fields = ('paid_at', 'paid_course', 'paid_lesson', 'payment_amount', 'payment_method', 'owner', 'payment_id')
 
     def get_payment_id(self, instance):  # получение id платежа
-        stripe.api_key = API_KEY
+        stripe.api_key = settings.STRIPE_API_KEY
 
         payment = stripe.PaymentIntent.create(
             amount=instance.payment_amount,
