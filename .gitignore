@@ -162,4 +162,4 @@ cython_debug/
 *.png
 *.jpeg
 *.jpg
-migrations/
+#migrations/

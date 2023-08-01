@@ -1,7 +1,10 @@
+import stripe
 from rest_framework import serializers
 
 from lms.models import Course, Lesson, Payment, Subscription
 from lms.validators import VideoLinkValidator
+
+API_KEY = "sk_test_51NaO5cAG5LQisvlaNNahDCacDrXRR7qNuI34osLGqdwVLi53iWtDcNXNXAAfRRKp4v0GP7XNkqI2xZMMP0dh8tdH00pJkDoYtj"
 
 
 class LessonSerializer(serializers.ModelSerializer):
@@ -26,10 +29,10 @@ class CourseSerializer(serializers.ModelSerializer):
         model = Course
         fields = ('id', 'name', 'description', 'number_of_lessons', 'lessons', 'owner', 'subscription')
 
-    def get_number_of_lessons(self, instance): # возвращает количество уроков
+    def get_number_of_lessons(self, instance):  # возвращает количество уроков
         return instance.lesson.all().count()
 
-    def get_subscription(self, instance): # возвращает признак подписки у текущего авторизованного пользователя
+    def get_subscription(self, instance):  # возвращает признак подписки у текущего авторизованного пользователя
         auth_user = self.context['request'].user  # текущий авторизованный пользователь
         return Subscription.objects.filter(course=instance, owner=auth_user, is_subscribed=True).exists()
 
@@ -38,3 +41,23 @@ class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
         fields = '__all__'
+
+
+class PaymentCreateSerializer(serializers.ModelSerializer):
+    payment_id = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Payment
+        fields = ('paid_at', 'paid_course', 'paid_lesson', 'payment_amount', 'payment_method', 'owner', 'payment_id')
+
+    def get_payment_id(self, instance):  # получение id платежа
+        stripe.api_key = API_KEY
+
+        payment = stripe.PaymentIntent.create(
+            amount=instance.payment_amount,
+            currency="usd",
+            automatic_payment_methods={"enabled": True},
+        )
+        instance.payment_id = payment['id']
+        instance.save()
+        return payment['id']

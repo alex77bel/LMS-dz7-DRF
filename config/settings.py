@@ -38,9 +38,10 @@ STANDARD_APPS = [
 ]
 
 USER_APPS = [
-    'rest_framework',  # настройка для rest_framework
-    'django_filters',  # настройка для django_filters
-    'rest_framework_simplejwt',  # настройка для JWT
+    'drf_yasg',  # yasg
+    'rest_framework',  # rest_framework
+    'django_filters',  # django_filters
+    'rest_framework_simplejwt',  # JWT
     'users.apps.UsersConfig',
     'lms.apps.LmsConfig',
 ]

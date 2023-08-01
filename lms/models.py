@@ -53,6 +53,7 @@ class Payment(models.Model):
         CASH = 'CA', 'Cash'
         TRANSFER = 'TR', 'Transfer'
 
+    payment_id = models.CharField(max_length=100, verbose_name='Идентификатор платежа у Stripe')
     paid_at = models.DateField(verbose_name='дата оплаты')
     paid_course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True,
                                     verbose_name='оплаченный курс')
