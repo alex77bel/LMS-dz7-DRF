@@ -38,14 +38,22 @@ STANDARD_APPS = [
 ]
 
 USER_APPS = [
-    'rest_framework',  # настройка для rest_framework
-    'django_filters',  # настройка для django_filters
-    'rest_framework_simplejwt',  # настройка для JWT
+    'django_crontab',
+    'drf_yasg',  # yasg
+    'rest_framework',  # rest_framework
+    'django_filters',  # django_filters
+    'rest_framework_simplejwt',  # JWT
     'users.apps.UsersConfig',
     'lms.apps.LmsConfig',
 ]
 
 INSTALLED_APPS = STANDARD_APPS + USER_APPS
+
+STRIPE_API_KEY = "sk_test_51NaO5cAG5LQisvlaNNahDCacDrXRR7qNuI34osLGqdwVLi53iWtDcNXNXAAfRRKp4v0GP7XNkqI2xZMMP0dh8tdH00pJkDoYtj"
+
+CRONJOBS = [
+    ('* * * * *', 'lms.cron.my_scheduled_job'),
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -150,4 +158,3 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
 }
-

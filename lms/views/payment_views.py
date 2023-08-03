@@ -16,7 +16,7 @@ class PaymentBaseMixin:
 
 
 class PaymentCreateAPIView(SetOwnerMixin, generics.CreateAPIView):
-    serializer_class = serializers.PaymentSerializer
+    serializer_class = serializers.PaymentCreateSerializer
 
 
 class PaymentListAPIView(PaymentBaseMixin, generics.ListAPIView):

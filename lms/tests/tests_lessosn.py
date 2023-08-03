@@ -1,13 +1,25 @@
 from django.urls import reverse
 from rest_framework import status
-from rest_framework.test import APITestCase
+from rest_framework.test import APITestCase, APIClient
+from rest_framework_simplejwt.tokens import AccessToken
 
 from lms.models import Lesson
+from users.models import User
 
 
 class LessonsTestCase(APITestCase):
 
     def setUp(self) -> None:
+
+        self.user = User.objects.create(
+            email='user@test.test',
+            password='12345',
+            is_superuser=True,
+            is_staff=True)
+        self.client = APIClient()
+        token = AccessToken.for_user(user=self.user)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
+
         self.lesson = Lesson.objects.create(
             name='test lesson',
             description='test lesson description',

@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="manage_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.2.7">coverage.py v7.2.7</a>,
-            created at 2023-07-30 23:25 +0300
+            created at 2023-07-31 21:54 +0300
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"/>
@@ -87,10 +87,9 @@
     <p class="run"><span class="n"><a id="t5" href="#t5">5</a></span><span class="t"><span class="key">from</span> <span class="nam">lms</span><span class="op">.</span><span class="nam">views</span><span class="op">.</span><span class="nam">lesson_views</span> <span class="key">import</span> <span class="nam">SetOwnerMixin</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t6" href="#t6">6</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t7" href="#t7">7</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t8" href="#t8">8</a></span><span class="t"><span class="com"># class SubscriptionViewSet(SetOwnerMixin, viewsets.ModelViewSet):</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t9" href="#t9">9</a></span><span class="t"><span class="key">class</span> <span class="nam">SubscriptionViewSet</span><span class="op">(</span><span class="nam">viewsets</span><span class="op">.</span><span class="nam">ModelViewSet</span><span class="op">)</span><span class="op">:</span>  <span class="com"># &#1076;&#1083;&#1103; &#1090;&#1077;&#1089;&#1090;&#1086;&#1074;</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t10" href="#t10">10</a></span><span class="t">    <span class="nam">serializer_class</span> <span class="op">=</span> <span class="nam">serializers</span><span class="op">.</span><span class="nam">SubscriptionSerializer</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t11" href="#t11">11</a></span><span class="t">    <span class="nam">queryset</span> <span class="op">=</span> <span class="nam">Subscription</span><span class="op">.</span><span class="nam">objects</span><span class="op">.</span><span class="nam">all</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t8" href="#t8">8</a></span><span class="t"><span class="key">class</span> <span class="nam">SubscriptionViewSet</span><span class="op">(</span><span class="nam">SetOwnerMixin</span><span class="op">,</span> <span class="nam">viewsets</span><span class="op">.</span><span class="nam">ModelViewSet</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t9" href="#t9">9</a></span><span class="t">    <span class="nam">serializer_class</span> <span class="op">=</span> <span class="nam">serializers</span><span class="op">.</span><span class="nam">SubscriptionSerializer</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t10" href="#t10">10</a></span><span class="t">    <span class="nam">queryset</span> <span class="op">=</span> <span class="nam">Subscription</span><span class="op">.</span><span class="nam">objects</span><span class="op">.</span><span class="nam">all</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
 </main>
 <footer>
     <div class="content">
@@ -100,7 +99,7 @@
             <a id="nextFileLink" class="nav" href="manage_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.2.7">coverage.py v7.2.7</a>,
-            created at 2023-07-30 23:25 +0300
+            created at 2023-07-31 21:54 +0300
         </p>
     </div>
 </footer>

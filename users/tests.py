@@ -1,5 +1,6 @@
 from rest_framework import status
-from rest_framework.test import APITestCase
+from rest_framework.test import APITestCase, APIClient
+from rest_framework_simplejwt.tokens import AccessToken
 
 from users.models import User
 
@@ -8,8 +9,13 @@ class UserTestCase(APITestCase):
 
     def setUp(self) -> None:
         self.user = User.objects.create(
-            email='test@test.ru',
-        )
+            email='user@test.test',
+            password='12345',
+            is_superuser=True,
+            is_staff=True)
+        self.client = APIClient()
+        token = AccessToken.for_user(user=self.user)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
 
     def test_list(self):
         """Тест списка"""
@@ -28,13 +34,14 @@ class UserTestCase(APITestCase):
               'email': self.user.email,
               'phone': None,
               'city': None,
-              'is_superuser': False,
-              'is_staff': False}])
+              'is_superuser': True,
+              'is_staff': True,
+              }])
 
     def test_create(self):
         """Тест создания"""
         data = {
-            "email": 'test1@test.ru',
+            'email': 'user1@test.test'
         }
 
         response = self.client.post(
