@@ -10,7 +10,7 @@ class UserSerializerAll(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'phone', 'city', 'payments', 'is_superuser', 'is_staff', 'password')
+        fields = ('id', 'email', 'phone', 'city', 'payments', 'is_superuser', 'is_staff', 'password', 'last_login')
 
 
 class UserSerializerShort(serializers.ModelSerializer):
@@ -18,4 +18,4 @@ class UserSerializerShort(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'phone', 'city', 'is_superuser', 'is_staff')
+        fields = ('id', 'email', 'phone', 'city', 'is_superuser', 'is_staff', 'last_login')
