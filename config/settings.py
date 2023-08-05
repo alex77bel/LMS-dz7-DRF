@@ -9,8 +9,11 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+import os
 from datetime import timedelta
 from pathlib import Path
+# from users.tasks import user_activity_check, task1
+# from lms.tasks import shared_task
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,7 +41,8 @@ STANDARD_APPS = [
 ]
 
 USER_APPS = [
-    'django_crontab',
+    'django_crontab',  # crontab
+    'django_celery_beat',  # celery-beat
     'drf_yasg',  # yasg
     'rest_framework',  # rest_framework
     'django_filters',  # django_filters
@@ -50,10 +54,6 @@ USER_APPS = [
 INSTALLED_APPS = STANDARD_APPS + USER_APPS
 
 STRIPE_API_KEY = "sk_test_51NaO5cAG5LQisvlaNNahDCacDrXRR7qNuI34osLGqdwVLi53iWtDcNXNXAAfRRKp4v0GP7XNkqI2xZMMP0dh8tdH00pJkDoYtj"
-
-CRONJOBS = [
-    ('* * * * *', 'lms.cron.my_scheduled_job'),
-]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -121,11 +121,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'ru-ru'
-
-TIME_ZONE = 'UTC'
-
+TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
-
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
@@ -139,6 +136,19 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'django-test-alex77bel@yandex.ru'
+EMAIL_HOST_PASSWORD = 'nqlxykqluoiwvzwd'
+EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
+EMAIL_ADMIN = EMAIL_HOST_USER
 
 REST_FRAMEWORK = {
 
@@ -158,3 +168,32 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
 }
+
+CELERY_BEAT_SCHEDULE = {
+
+    'user_activity_check': {
+        'task': 'users.tasks.user_activity_check',
+        'schedule': timedelta(minutes=1)
+    },
+}
+# 1. Обязательно должно присутствовать 'task', иначе не найдет
+# 2. команды запуска периодических задач (надо почему-то в разных терминалах):
+# celery -A config worker -l INFO
+# celery -A config beat -l info -S django
+
+
+# Настройки для Celery
+# URL-адрес брокера сообщений
+CELERY_BROKER_URL = 'redis://localhost:6379'  # Например, Redis, который по умолчанию работает на порту 6379
+# URL-адрес брокера результатов, также Redis
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+# Часовой пояс для работы Celery
+CELERY_TIMEZONE = "Europe/Moscow"
+# Флаг отслеживания выполнения задач
+CELERY_TASK_TRACK_STARTED = True
+# Максимальное время на выполнение задачи
+CELERY_TASK_TIME_LIMIT = 30 * 60
+
+# CRONJOBS = [
+#     ('* * * * *', 'lms.cron.my_scheduled_job'),
+# ]
