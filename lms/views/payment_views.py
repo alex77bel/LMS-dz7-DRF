@@ -18,7 +18,6 @@ class PaymentBaseMixin:
 class PaymentCreateAPIView(SetOwnerMixin, generics.CreateAPIView):
     serializer_class = serializers.PaymentCreateSerializer
 
-
 class PaymentListAPIView(PaymentBaseMixin, generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, OrderingFilter]  # настройки фильтрации и сортировки
     filterset_fields = ('paid_course', 'paid_lesson', 'payment_method')  # настройки фильтрации

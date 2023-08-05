@@ -1,4 +1,7 @@
+
 from rest_framework import viewsets
+
+from config import settings
 
 from lms.models import Subscription
 from lms import serializers

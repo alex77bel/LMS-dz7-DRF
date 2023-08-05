@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 from config import settings
 from users.models import User
@@ -8,6 +9,7 @@ class Course(models.Model):
     name = models.CharField(max_length=255, verbose_name='название')
     description = models.CharField(max_length=255, verbose_name='описание')
     preview = models.ImageField(upload_to='course/', verbose_name='превью', null=True, blank=True)
+    last_update = models.DateTimeField(verbose_name='время последнего обновления', default=timezone.now)
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
                               on_delete=models.SET_NULL,
