@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from users.manager import UserManager
+
 
 class User(AbstractUser):
     username = None
@@ -19,3 +21,5 @@ class User(AbstractUser):
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
         ordering = ('first_name',)
+
+    objects = UserManager()
