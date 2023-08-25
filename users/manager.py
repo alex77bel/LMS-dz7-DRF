@@ -37,8 +37,6 @@ class UserManager(PriorUserManager):
 #
 #
 #
-#
-#
 # Вариант 2
 #
 # class UserManager(PriorUserManager):
