@@ -1,0 +1,72 @@
+version: '3'
+
+services:
+  db:
+    restart: always
+    image: postgres:14.9-alpine3.18
+    container_name: d7_db
+    environment:
+      POSTGRES_PASSWORD: password
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      #      test: [ 'CMD-SHELL', 'pg_isready -d postgres -U postgres' ]
+      test: [ 'CMD-SHELL', 'pg_isready' ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7.2.0-alpine
+    container_name: d7_redis
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - redis_data:/data
+    ports:
+      - '6379:6379'
+
+  celery:
+    build: .
+    container_name: d7_celery
+    command: >
+      bash -c "celery -A config worker --beat --loglevel=info"
+    volumes:
+      - .:/code
+      - ./.env.docker:/code/.env
+    links:
+      - redis
+    depends_on:
+      - app
+      - redis
+
+  app:
+    build: .
+    container_name: d7_app
+    env_file:
+      - .env
+    command: >
+      bash -c "python manage.py collectstatic --noinput
+      && python manage.py makemigrations
+      && python manage.py migrate
+      && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - static:/docker_code/static/
+      - media:/docker_code/media/
+      - ./.env.docker:/code/.env
+    ports:
+      - '8000:8000'
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+
+volumes:
+  postgresql_data:
+  redis_data:
+  static:
+  media:
