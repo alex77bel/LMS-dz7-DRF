@@ -1,28 +1,19 @@
-Запуск приложения в docker:
+# Запуск приложения в docker-compose:
 
-Создай файл .env и заполни его по образцу .env_еxample 
-Для создания docker-контейнера запусти команду:
+- Создай файл .env и заполни его по образцу .env_еxample 
+- Для создания docker-контейнера запусти команду:
 
-docker-compose up -d --build
+        docker-compose up -d --build
 
-Технологии в проекте (стек)
+Технологии в проекте:
 
-    Python
-    Celery
-    Redis
-    Django
-    DRF
-    PostgreSQL
-    JWT
-    Stripe
-    Unittest
+- Python, Celery, Redis, Django, DRF, PostgreSQL, JWT, Stripe, Unittest,
 
+Сущности в проекте:
 
-Сущности в проекте
-
-    Course (Курс)
-    Lesson (Урок)
-    User (Пользователь)
-    Payment (Платеж)
-    Subscription (Подписка)
+- Course (Курс)
+- Lesson (Урок)
+- User (Пользователь)
+- Payment (Платеж)
+- Subscription (Подписка)
 
