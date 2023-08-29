@@ -21,4 +21,3 @@ def sendmail(recipient):  # отправка письма
     except:  # другие ошибки
         response = "Отправка почты не удалась"
     return status, response
-
