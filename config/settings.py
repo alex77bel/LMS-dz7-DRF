@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-z^)*&u(s0co&!2886kq#c%jev#h60ka2ajnn*(9)ozx9czfhrp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -94,9 +94,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'dz7',
-        'USER': 'postgres_ubuntu',
-        'PASSWORD': '0112',
-        'HOST': 'localhost',
+        'USER': 'postgres',
+        #        'PASSWORD': '0112',
+        #        'HOST': 'localhost',
         'PORT': ''
     }
 }
@@ -210,7 +210,6 @@ CELERY_TIMEZONE = "Europe/Moscow"
 CELERY_TASK_TRACK_STARTED = True
 # Максимальное время на выполнение задачи
 CELERY_TASK_TIME_LIMIT = 30 * 60
-
 
 # CRONJOBS = [
 #     ('* * * * *', 'lms.cron.my_scheduled_job'),
