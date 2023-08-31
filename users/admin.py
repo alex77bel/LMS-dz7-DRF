@@ -8,3 +8,4 @@ from users.models import User
 @admin.register(User)
 class ClientAdmin(admin.ModelAdmin):
     list_display = ('id', 'email','last_login', 'is_active')
+    list_editable = ('email','last_login', 'is_active')

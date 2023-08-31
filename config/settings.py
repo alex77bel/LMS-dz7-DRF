@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-z^)*&u(s0co&!2886kq#c%jev#h60ka2ajnn*(9)ozx9czfhrp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -93,13 +93,24 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('NAME'),
+        'NAME': 'dz7',
         'USER': 'postgres',
-        'PASSWORD': os.getenv('PASSWORD'),
-        'HOST': 'db',
-        'PORT': '5432'
+        #        'PASSWORD': '0112',
+        #        'HOST': 'localhost',
+        'PORT': ''
     }
 }
+# для докера
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('NAME'),
+#         'USER': os.getenv('USER'),
+#         'PASSWORD': os.getenv('PASSWORD'),
+#         'HOST': os.getenv('HOST'),
+#         'PORT': '5432'
+#     }
+# }
 
 # Password validation
 
@@ -177,6 +188,8 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
 }
 
+# celery -A config worker --beat --loglevel=info
+# Обязательно должно присутствовать слово 'task', иначе не найдет:
 CELERY_BEAT_SCHEDULE = {
 
     'user_activity_check': {
@@ -184,11 +197,6 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': timedelta(minutes=1)
     },
 }
-# 1. Обязательно должно присутствовать 'task', иначе не найдет
-# 2. команды запуска периодических задач (надо почему-то в разных терминалах):
-# celery -A config worker -l INFO
-# celery -A config beat -l info -S django
-
 
 # Настройки для Celery
 # URL-адрес брокера сообщений
@@ -202,9 +210,6 @@ CELERY_TIMEZONE = "Europe/Moscow"
 CELERY_TASK_TRACK_STARTED = True
 # Максимальное время на выполнение задачи
 CELERY_TASK_TIME_LIMIT = 30 * 60
-# CELERY_ACCEPT_CONTENT = ['application/json']
-# CELERY_TASK_SERIALIZER = 'json'
-# CELERY_RESULT_SERIALIZER = 'json'
 
 # CRONJOBS = [
 #     ('* * * * *', 'lms.cron.my_scheduled_job'),
